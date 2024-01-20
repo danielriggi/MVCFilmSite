@@ -9,7 +9,6 @@ import com.skilldistillery.film.entities.Film;
 
 public class TestingApp {
 	DatabaseAccessor dao = new FilmDAOImpl();
-	
 
 	public static void main(String[] args) {
 		TestingApp app = new TestingApp();
@@ -30,12 +29,12 @@ public class TestingApp {
 	}
 
 	private void startUserInterface(Scanner input) {
-		
 
 		int choice = 0;
 		do {
 			displayMenu();
 			choice = input.nextInt();
+			input.nextLine();
 			switch (choice) {
 			case 1:
 				System.out.println("Please enter a film id.");
@@ -43,6 +42,7 @@ public class TestingApp {
 				Film film = dao.findFilmById(filmId);
 				if (film != null) {
 					System.out.println(film);
+					editFilmOption(input, film);
 					deleteFilmOption(input, film);
 				} else {
 					System.out.println("No film found with id: " + filmId);
@@ -57,6 +57,7 @@ public class TestingApp {
 				} else {
 					for (Film currentFilm : films) {
 						System.out.println(currentFilm);
+						editFilmOption(input, currentFilm);
 						deleteFilmOption(input, currentFilm);
 					}
 				}
@@ -81,13 +82,14 @@ public class TestingApp {
 				}
 				System.out.println("Category:");
 				String category = input.nextLine();
-				
+
 				Film userFilm = new Film(0, title, description, null, releaseYear, rating, null, filmLength, category);
 				Film addedFilm = dao.createFilm(userFilm);
 				System.out.println(addedFilm);
+				editFilmOption(input, addedFilm);
 				deleteFilmOption(input, addedFilm);
 				break;
-				
+
 			case 4:
 				System.out.println("Exiting program");
 				break;
@@ -105,20 +107,37 @@ public class TestingApp {
 		System.out.println("4. Exit the application");
 		System.out.print("Enter your choice: ");
 	}
-	
+
 	public void deleteFilmOption(Scanner input, Film film) {
 		System.out.println("Do you wish to delete this film?");
 		System.out.println("1. Yes");
 		System.out.println("2. No Way!");
 		int choice = input.nextInt();
-		switch(choice) {
+		switch (choice) {
 		case 1:
 			dao.deleteFilm(film);
 			break;
 		default:
 			System.out.println("Keeping film.\n");
 		}
-		
-		
+	}
+
+	public void editFilmOption(Scanner input, Film film) {
+		System.out.println("Do you wish to edit this film?");
+		System.out.println("1. Yes");
+		System.out.println("2. No Way!");
+		int choice = input.nextInt();
+		input.nextLine();
+		switch (choice) {
+		case 1:
+			System.out.println("New Title: ");
+			String title = input.nextLine();
+			film.setTitle(title);
+			dao.editFilm(film);
+			break;
+		default:
+			System.out.println("Not editin film.\n");
+		}
+
 	}
 }

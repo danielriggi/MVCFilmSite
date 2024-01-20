@@ -7,11 +7,11 @@ public class Film {
 	private int id;
 	private String title;	
 	private String description;
-	private List<Actor> actors;
 	private int year;
-	private String rating;
-	private String language;
 	private Integer length;
+	private String rating;
+	private List<Actor> actors;
+	private String language;
 	private String category;
 	
 	

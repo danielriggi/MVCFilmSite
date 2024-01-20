@@ -27,8 +27,51 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	}
 	
 	@Override
-	public Film editFilm() {
+	public Film editFilm(Film film) {
+		String sql = "UPDATE film "
+				+ "SET title = ?,"
+				+ "description = ?,"
+				+ "release_year = ?,"
+				+ "length = ?,"
+				+ "rating = ?"
+				+ "WHERE id = ?";
 		
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			conn.setAutoCommit(false); // Start transaction
+			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, film.getTitle());
+			st.setString(2, film.getDescription());
+			st.setInt(3, film.getYear());
+			st.setInt(4, film.getLength());
+			st.setString(5, film.getRating());
+			st.setInt(6,  film.getId());
+
+			int uc = st.executeUpdate();
+			System.out.println(uc + " film record updated.");
+			
+			ResultSet keys = st.getGeneratedKeys();
+		    if (keys.next()) {
+		        int generatedFilmId = keys.getInt(1);
+		        System.out.println("Film ID: " + generatedFilmId + " updated");
+		    }
+
+			conn.commit();
+			st.close();
+			conn.close();
+			return film;
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			return null;
+		}
 	}
 	
 	@Override
@@ -111,8 +154,10 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	@Override
 	public List<Film> findFilmsByKeyword(String keyword) {
 		List<Film> films = new ArrayList<>();
-		String sql = "SELECT *\n"
-				+ "FROM film c\n"
+		String sql = "SELECT f.*, l.name as language\n"
+				+ "FROM film f\n"
+				+ "JOIN language l\n"
+				+ " ON l.id = f.language_id\n"
 				+ "WHERE title COLLATE utf8_general_ci LIKE ?\n"
 				+ " OR description COLLATE utf8_general_ci LIKE ?;";
 		try {
@@ -211,7 +256,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Category category = new Category(rs.getInt("id"), rs.getString("name"));
+				category = new Category(rs.getInt("id"), rs.getString("name"));
 			}
 			rs.close();
 			ps.close();
