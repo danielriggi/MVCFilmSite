@@ -71,6 +71,35 @@ public class FilmController {
 		mv.setViewName("WEB-INF/views/home.jsp");
 		return mv;
 	}
+	
+	@RequestMapping(path = "EditFilm.do", method = RequestMethod.POST)
+	public ModelAndView editFilmById(@RequestParam("editFilmId") Integer id) {
+		ModelAndView mv = new ModelAndView();
+		Film film = filmDAO.findFilmById(id);
+		mv.addObject("film", film);
+		mv.setViewName("WEB-INF/views/EditFilm.jsp");
+		return mv;
+	}
+	
+	@RequestMapping(path = "EditFilm2.do", method = RequestMethod.POST)
+	public String  submitEditFilm(Film film, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+		List<Film> films = new ArrayList<>(); 
+		
+		Film editedFilm = filmDAO.editFilm(film);
+		films.add(editedFilm);
+		redir.addFlashAttribute("films", films);
+		return "redirect:filmEdited.do";
+	}
+	
+	@RequestMapping("filmEdited.do")
+	public ModelAndView filmEdited() {
+		ModelAndView mv = new ModelAndView();
+		// This uses InternalResourceViewResolver with WEB-INF and .jsp as the prefix
+		// and suffix
+		mv.setViewName("WEB-INF/views/result.jsp");
+		return mv;
+	}
 }
 
 

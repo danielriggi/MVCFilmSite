@@ -24,11 +24,16 @@
 					<li>Actors: ${film.actors}</li>
 					<li>Language: ${film.language}</li>
 					<li>Category: ${film.category}</li>
-					<h3>Delete Film</h3>
+<!-- 					<a href="EditFilm.html">Edit This Film</a> -->
+					<br />
+					<h3>Edit Film</h3>
+					<form action="EditFilm.do" method="POST">
+						<input type="hidden" name="editFilmId" value="${film.id}">
+						<button type="submit">Edit this film</button>
+					</form>
+					<h3 style="color: red;">Delete Film</h3>
 					<form action="DeleteFilm.do" method="POST">
-						<!-- Assuming you want to pass the film ID for deletion -->
 						<input type="hidden" name="deleteFilmId" value="${film.id}">
-						<!-- Replace "123" with the actual film ID -->
 						<button type="submit">Delete this film</button>
 					</form>
 				</c:forEach>

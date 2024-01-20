@@ -31,11 +31,11 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	@Override
 	public Film editFilm(Film film) {
 		String sql = "UPDATE film "
-				+ "SET title = ?,"
-				+ "description = ?,"
-				+ "release_year = ?,"
-				+ "length = ?,"
-				+ "rating = ?"
+				+ "SET title = ?, "
+				+ "description = ?, "
+				+ "release_year = ?, "
+				+ "length = ?, "
+				+ "rating = ? "
 				+ "WHERE id = ?";
 		
 		Connection conn = null;
