@@ -18,6 +18,7 @@ public interface DatabaseAccessor {
 	public List<Actor> findActorsByFilmId(int filmId);
 	public Category findCategoryByFilmId(int filmId);
 	public boolean deleteFilm(Film film);
+	public boolean deleteFilm(Integer id);
 
 
 }

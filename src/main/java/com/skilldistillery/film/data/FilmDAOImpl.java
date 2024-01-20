@@ -110,6 +110,39 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	}
 	
 	@Override
+	public boolean deleteFilm(Integer id) {
+		String sql = "DELETE FROM film WHERE id = ?";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			conn.setAutoCommit(false); // Start transaction
+			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setInt(1, id);
+
+
+			int uc = st.executeUpdate();
+			System.out.println(uc + " film record deleted.");
+
+			conn.commit();
+			st.close();
+			conn.close();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			return false;
+		}
+		return true;
+
+	}
+	
+	@Override
 	public Film createFilm(Film film) {
 	    Map<String, Integer> languageMapping = new HashMap<>();
         languageMapping.put("English", 1);
@@ -199,8 +232,12 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	@Override
 	public Film findFilmById(int filmId) {
 		Film film = null;
-		String sql = "SELECT f.*,\n" + "       l.name AS language\n" + "FROM film f\n" + "JOIN language l \n"
-				+ " ON f.language_id  = l.id\n" + "WHERE f.id = ?";
+		String sql = "SELECT f.*,\n"
+		                   + "l.name AS language\n"
+		                   + "FROM film f\n"
+		                   + "JOIN language l \n"
+			               + " ON f.language_id  = l.id\n" 
+		                   + "WHERE f.id = ?";
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -210,9 +247,10 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			if (rs.next()) {
 				List<Actor> actors = findActorsByFilmId(filmId);
 				Category category = findCategoryByFilmId(filmId);
+				String categoryString = (category != null) ? category.toString() : null;
 				film = new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"), actors,
 						rs.getInt("release_year"), rs.getString("rating"), rs.getString("language"),
-						rs.getInt("length"), category.toString());
+						rs.getInt("length"), categoryString);
 
 			}
 			rs.close();

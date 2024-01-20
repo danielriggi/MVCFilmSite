@@ -25,7 +25,7 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "GetFilm.do", params = "id", method = RequestMethod.GET)
-	public ModelAndView getStateByName(@RequestParam("id") Integer id) {
+	public ModelAndView getFilmById(@RequestParam("id") Integer id) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> films = new ArrayList<>(); // Initialize an empty list
 
@@ -61,4 +61,26 @@ public class FilmController {
 		mv.setViewName("WEB-INF/views/result.jsp");
 		return mv;
 	}
+	
+	
+	@RequestMapping(path = "DeleteFilm.do", method = RequestMethod.POST)
+	public ModelAndView deleteFilmById(@RequestParam("deleteFilmId") Integer id) {
+		ModelAndView mv = new ModelAndView();
+		Boolean isDeleted = filmDAO.deleteFilm(id);
+	
+		mv.setViewName("WEB-INF/views/home.jsp");
+		return mv;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
