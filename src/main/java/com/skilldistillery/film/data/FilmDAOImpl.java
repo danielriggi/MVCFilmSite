@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -109,8 +111,14 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	
 	@Override
 	public Film createFilm(Film film) {
+	    Map<String, Integer> languageMapping = new HashMap<>();
+        languageMapping.put("English", 1);
+        languageMapping.put("Italian", 2);
+        languageMapping.put("Japanese", 3);
+        languageMapping.put("Mandarin", 4);
+        languageMapping.put("French", 5);
 		String sql = "INSERT INTO film (title, description, release_year, language_id, "
-				+ "                     length, rating)" + "    VALUES (?, ?, ?, 1, ?, ?)";
+				+ "                     length, rating)" + "    VALUES (?, ?, ?, ?, ?, ?)";
 
 		Connection conn = null;
 		try {
@@ -120,8 +128,9 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			st.setString(1, film.getTitle());
 			st.setString(2, film.getDescription());
 			st.setInt(3, film.getYear());
-			st.setInt(4, film.getLength());
-			st.setString(5, film.getRating());
+			st.setInt(4, languageMapping.get(film.getLanguage()));
+			st.setInt(5, film.getLength());
+			st.setString(6, film.getRating());
 
 			int uc = st.executeUpdate();
 			System.out.println(uc + " film record created.");

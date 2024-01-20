@@ -3,6 +3,9 @@ package com.skilldistillery.film.entities;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+
 public class Film {
 	private int id;
 	private String title;	
@@ -14,6 +17,9 @@ public class Film {
 	private String language;
 	private String category;
 	
+	public Film() {
+		
+	}
 	
     public Film(int id, String title, String description, List<Actor> actors) {
         this(id, title, description, actors, 0, null, null, null, null);
@@ -21,6 +27,12 @@ public class Film {
 
     public Film(int id, String title, String description) {
         this(id, title, description, null, 0, null, null, null, null);
+    }
+    
+    public Film(String title, String description, int year, int length, String rating, String language) {
+    	this(0, title, description, null, year, rating, language, length, null);
+    	System.out.println("===============/n/n/n/n/n/n/n/n==================");
+
     }
 
     public Film(int id, String title, String description, List<Actor> actors, int year, String rating, String language, Integer length, String category) {

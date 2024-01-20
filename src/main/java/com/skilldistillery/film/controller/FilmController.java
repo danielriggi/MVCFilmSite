@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.data.DatabaseAccessor;
 import com.skilldistillery.film.entities.Film;
@@ -23,18 +24,41 @@ public class FilmController {
 		return "WEB-INF/views/home.jsp";
 	}
 
-	@RequestMapping(path="GetFilm.do", params = "id", method = RequestMethod.GET)
+	@RequestMapping(path = "GetFilm.do", params = "id", method = RequestMethod.GET)
 	public ModelAndView getStateByName(@RequestParam("id") Integer id) {
-	    ModelAndView mv = new ModelAndView();
-	    List<Film> films = new ArrayList<>(); // Initialize an empty list
+		ModelAndView mv = new ModelAndView();
+		List<Film> films = new ArrayList<>(); // Initialize an empty list
 
-	    Film film = filmDAO.findFilmById(id);
-	    if (film != null) {
-	        films.add(film); // Add the film to the list
-	    }
+		Film film = filmDAO.findFilmById(id);
+		if (film != null) {
+			films.add(film); // Add the film to the list
+		}
 
-	    mv.addObject("films", films);
-	    mv.setViewName("WEB-INF/views/result.jsp");
-	    return mv;
+		mv.addObject("films", films);
+		mv.setViewName("WEB-INF/views/result.jsp");
+		return mv;
+	}
+
+	@RequestMapping(path = "AddFilm.do", method = RequestMethod.POST)
+	public String newFilm(Film film, RedirectAttributes redir) {
+		List<Film> films = new ArrayList<>(); // Initialize an empty list
+
+		Film newFilm = filmDAO.createFilm(film);
+		if (newFilm != null) {
+			films.add(newFilm); // Add the film to the list
+		}
+
+		;
+		redir.addFlashAttribute("films", films);
+		return "redirect:filmAdded.do";
+	}
+
+	@RequestMapping("filmAdded.do")
+	public ModelAndView filmAdded() {
+		ModelAndView mv = new ModelAndView();
+		// This uses InternalResourceViewResolver with WEB-INF and .jsp as the prefix
+		// and suffix
+		mv.setViewName("WEB-INF/views/result.jsp");
+		return mv;
 	}
 }

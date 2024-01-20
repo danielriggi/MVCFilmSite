@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Film</title>
+</head>
+<body>
+  <h3>Add Film</h3>
+  <form action="AddFilm.do" method="POST">
+    <!-- Title input -->
+    Title:
+    <input type="text" name="title"/> 
+    <br>
+    
+    <!-- Description input -->
+    Description:
+    <input type="text" name="description"/> 
+    <br>
+    
+    <!-- Year input -->
+    Year:
+    <input type="text" name="year"/> 
+    <br>
+    
+    <!-- Length input -->
+    Length:
+    <input type="text" name="length"/> 
+    <br>
+    
+    <!-- Rating input -->
+    Rating:
+    <select name="rating">
+      <option value="G">G</option>
+      <option value="PG">PG</option>
+      <option value="PG13">PG13</option>
+      <option value="NC17">NC17</option>
+      <option value="R">R</option>
+      <!-- Add more language options as needed -->
+    </select>
+    <br>
+    
+    <!-- Language dropdown menu -->
+    Language:
+    <select name="language">
+      <option value="English">English</option>
+      <option value="Italian">Italian</option>
+      <option value="Japanese">Japanese</option>
+      <option value="Mandarin">Mandarin</option>
+      <option value="French">French</option>
+      <!-- Add more language options as needed -->
+    </select>
+    <br>
+    
+    <input type="submit" value="Add Film" />
+  </form>
+</body>
+</html>
