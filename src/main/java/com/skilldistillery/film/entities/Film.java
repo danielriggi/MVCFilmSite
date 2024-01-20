@@ -29,9 +29,8 @@ public class Film {
         this(id, title, description, null, 0, null, null, null, null);
     }
     
-    public Film(String title, String description, int year, int length, String rating, String language) {
-    	this(0, title, description, null, year, rating, language, length, null);
-    	System.out.println("===============/n/n/n/n/n/n/n/n==================");
+    public Film(int id, String title, String description, int year, int length, String rating, String language) {
+    	this(id, title, description, null, year, rating, language, length, null);
 
     }
 

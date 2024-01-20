@@ -83,7 +83,6 @@ public class FilmController {
 	
 	@RequestMapping(path = "EditFilm2.do", method = RequestMethod.POST)
 	public String  submitEditFilm(Film film, RedirectAttributes redir) {
-		ModelAndView mv = new ModelAndView();
 		List<Film> films = new ArrayList<>(); 
 		
 		Film editedFilm = filmDAO.editFilm(film);
