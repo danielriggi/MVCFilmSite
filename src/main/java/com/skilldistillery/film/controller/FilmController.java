@@ -25,12 +25,16 @@ public class FilmController {
 
 	@RequestMapping(path="GetFilm.do", params = "id", method = RequestMethod.GET)
 	public ModelAndView getStateByName(@RequestParam("id") Integer id) {
-		ModelAndView mv = new ModelAndView();
-		List<Film> films = new ArrayList();
-		Film film = filmDAO.findFilmById(id);
-		films.add(film);
-		mv.addObject("films", films);
-		mv.setViewName("WEB-INF/views/result.jsp");
-		return mv;
+	    ModelAndView mv = new ModelAndView();
+	    List<Film> films = new ArrayList<>(); // Initialize an empty list
+
+	    Film film = filmDAO.findFilmById(id);
+	    if (film != null) {
+	        films.add(film); // Add the film to the list
+	    }
+
+	    mv.addObject("films", films);
+	    mv.setViewName("WEB-INF/views/result.jsp");
+	    return mv;
 	}
 }

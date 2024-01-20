@@ -33,6 +33,7 @@ public class Film {
         this.rating = rating;
         this.language = language;
         this.length = length;
+        this.category = category;
     }
 
 	public String getLanguage() {
