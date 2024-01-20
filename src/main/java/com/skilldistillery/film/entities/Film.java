@@ -34,7 +34,22 @@ public class Film {
         this.language = language;
         this.length = length;
     }
-    
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public Integer getLength() {
 		return length;

@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Home</title>
 </head>
 <body>
-	some stuff
+<a href="GetFilmById.html">Get Film By ID</a><br/>
+<!-- <a href="abbrevForm.html">Get State By Abbreviation</a><br/>
+<a href="newState.html">Add a State</a><br/> -->
 </body>
 </html>
