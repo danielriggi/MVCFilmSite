@@ -2,6 +2,7 @@ package com.skilldistillery.film.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -107,6 +108,7 @@ public class FilmController {
 	@RequestMapping(path = "searchFilms.do", method = RequestMethod.POST)
 	public ModelAndView searchFilms(@RequestParam("keyword") String keyword, Model model) {
 		ModelAndView mv = new ModelAndView();
+		 //Map<String, Object> existingAttributes = model.asMap();
 		List<Film> films = filmDAO.findFilmsByKeyword(keyword);
 	    model.addAttribute("films", films);
 		mv.addObject("films", films);

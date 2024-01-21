@@ -193,40 +193,40 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	}
 
-	@Override
 	public List<Film> findFilmsByKeyword(String keyword) {
-		List<Film> films = new ArrayList<>();
-		String sql = "SELECT f.*, l.name as language\n"
-				+ "FROM film f\n"
-				+ "JOIN language l\n"
-				+ " ON l.id = f.language_id\n"
-				+ "WHERE title COLLATE utf8_general_ci LIKE ?\n"
-				+ " OR description COLLATE utf8_general_ci LIKE ?;";
-		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, "%" + keyword + "%");
-			ps.setString(2, "%" + keyword + "%");
-			ResultSet rs = ps.executeQuery();
+	    List<Film> films = new ArrayList<>();
+	    String sql = "SELECT f.*, l.name as language\n"
+	            + "FROM film f\n"
+	            + "JOIN language l\n"
+	            + " ON l.id = f.language_id\n"
+	            + "WHERE title COLLATE utf8_general_ci LIKE ?\n"
+	            + " OR description COLLATE utf8_general_ci LIKE ?;";
+	    try {
+	        Connection conn = DriverManager.getConnection(URL, USER, PASS);
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, "%" + keyword + "%");
+	        ps.setString(2, "%" + keyword + "%");
+	        ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
-				Integer id = rs.getInt("id");
-				List<Actor> actors = findActorsByFilmId(id);
-				Category category = findCategoryByFilmId(id);
-				Film film = new Film(id, rs.getString("title"), rs.getString("description"), actors,
-						rs.getInt("release_year"), rs.getString("rating"), rs.getString("language"),
-						rs.getInt("length"), category.toString());
-				films.add(film);
+	        while (rs.next()) {
+	            Integer id = rs.getInt("id");
+	            List<Actor> actors = findActorsByFilmId(id);
+	            Category category = findCategoryByFilmId(id);
+	            Film film = new Film(id, rs.getString("title"), rs.getString("description"), actors,
+	                    rs.getInt("release_year"), rs.getString("rating"), rs.getString("language"),
+	                    rs.getInt("length"), category.toString());
+	            films.add(film);
+	        }
 
-			}
-			rs.close();
-			ps.close();
-			conn.close();
-		} catch (SQLException e) {
-			System.err.println(e);
-		}
-		return films;
+	        rs.close();
+	        ps.close();
+	        conn.close();
+	    } catch (SQLException e) {
+	        System.err.println(e);
+	    }
+	    return films;
 	}
+
 
 
 	@Override
