@@ -113,7 +113,7 @@ public class FilmController {
 	    
 	    mv.addObject("newActor", newActor);
 
-	    mv.setViewName("WEB-INF/views/filmSearchResults.jsp");
+	    mv.setViewName("WEB-INF/views/actorResults.jsp");
 
 	    return mv;
 	}
