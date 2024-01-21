@@ -16,7 +16,7 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<h1>Film</h1>
+	<h1>Films</h1>
 	<c:choose>
 		<c:when test="${fn:length(films) > 0}">
 			<ul>

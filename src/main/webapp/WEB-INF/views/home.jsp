@@ -14,6 +14,7 @@
 
 		<a href="GetFilmById.html">Get Film By ID</a><br /> <a
 			href="AddNewFilm.html">Add New Film</a><br />
+			<a href="SearchbyKeyword.html">Search Films by Keyword</a><br />
 		<!-- <a href="abbrevForm.html">Get State By Abbreviation</a><br/>
 		<a href="newState.html">Add a State</a><br/> -->
 
