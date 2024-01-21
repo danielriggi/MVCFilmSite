@@ -19,7 +19,7 @@ import com.skilldistillery.film.entities.Film;
 
 @Repository
 public class FilmDAOImpl implements DatabaseAccessor {
-	
+
 	static {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,7 +27,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			System.err.println(e);
 		}
 	}
-	
+
 	@Override
 	public Film editFilm(Film film) {
 		String sql = "UPDATE film "
@@ -37,7 +37,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				+ "length = ?, "
 				+ "rating = ? "
 				+ "WHERE id = ?";
-		
+
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
@@ -52,7 +52,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 			int uc = st.executeUpdate();
 			System.out.println(uc + " film record updated.");
-			
+
 			ResultSet keys = st.getGeneratedKeys();
 		    if (keys.next()) {
 		        int generatedFilmId = keys.getInt(1);
@@ -75,7 +75,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public boolean deleteFilm(Film film) {
 		String sql = "DELETE FROM film WHERE id = ?";
@@ -108,7 +108,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		return true;
 
 	}
-	
+
 	@Override
 	public boolean deleteFilm(Integer id) {
 		String sql = "DELETE FROM film WHERE id = ?";
@@ -141,7 +141,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		return true;
 
 	}
-	
+
 	@Override
 	public Film createFilm(Film film) {
 	    Map<String, Integer> languageMapping = new HashMap<>();
@@ -167,7 +167,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 			int uc = st.executeUpdate();
 			System.out.println(uc + " film record created.");
-			
+
 			ResultSet keys = st.getGeneratedKeys();
 		    if (keys.next()) {
 		        int generatedFilmId = keys.getInt(1);
@@ -192,7 +192,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 
 	}
-	
+
 	@Override
 	public List<Film> findFilmsByKeyword(String keyword) {
 		List<Film> films = new ArrayList<>();
@@ -227,8 +227,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		return films;
 	}
-	
-	
+
+
 	@Override
 	public Film findFilmById(int filmId) {
 		Film film = null;
@@ -236,7 +236,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		                   + "l.name AS language\n"
 		                   + "FROM film f\n"
 		                   + "JOIN language l \n"
-			               + " ON f.language_id  = l.id\n" 
+			               + " ON f.language_id  = l.id\n"
 		                   + "WHERE f.id = ?";
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
@@ -261,7 +261,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		return film;
 	}
-	
+
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
 		List<Actor> actors = new ArrayList<>();
@@ -287,7 +287,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		return actors;
 
 	}
-	
+
 	@Override
 	public Category findCategoryByFilmId(int filmId) {
 		Category category = null;
@@ -314,6 +314,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		return category;
 
 	}
-	
-	
+
+
 }

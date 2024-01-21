@@ -3,12 +3,9 @@ package com.skilldistillery.film.entities;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
-
 public class Film {
 	private int id;
-	private String title;	
+	private String title;
 	private String description;
 	private int year;
 	private Integer length;
@@ -16,11 +13,11 @@ public class Film {
 	private List<Actor> actors;
 	private String language;
 	private String category;
-	
+
 	public Film() {
-		
+
 	}
-	
+
     public Film(int id, String title, String description, List<Actor> actors) {
         this(id, title, description, actors, 0, null, null, null, null);
     }
@@ -28,7 +25,7 @@ public class Film {
     public Film(int id, String title, String description) {
         this(id, title, description, null, 0, null, null, null, null);
     }
-    
+
     public Film(int id, String title, String description, int year, int length, String rating, String language) {
     	this(id, title, description, null, year, rating, language, length, null);
 
@@ -94,7 +91,7 @@ public class Film {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public List<Actor> getActors() {
 		return actors;
 	}
@@ -126,12 +123,12 @@ public class Film {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Film other = (Film) obj;
 		return Objects.equals(description, other.description) && id == other.id && Objects.equals(title, other.title);
 	}
@@ -143,7 +140,7 @@ public class Film {
 
 	}
 
-	
-	
-	
+
+
+
 }
