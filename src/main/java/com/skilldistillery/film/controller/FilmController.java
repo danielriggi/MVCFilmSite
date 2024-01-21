@@ -65,17 +65,16 @@ public class FilmController {
 		mv.setViewName("WEB-INF/views/result.jsp");
 		return mv;
 	}
-	
-	
+
 	@RequestMapping(path = "DeleteFilm.do", method = RequestMethod.POST)
 	public ModelAndView deleteFilmById(@RequestParam("deleteFilmId") Integer id) {
 		ModelAndView mv = new ModelAndView();
 		Boolean isDeleted = filmDAO.deleteFilm(id);
-	
+
 		mv.setViewName("WEB-INF/views/home.jsp");
 		return mv;
 	}
-	
+
 	@RequestMapping(path = "EditFilm.do", method = RequestMethod.POST)
 	public ModelAndView editFilmById(@RequestParam("editFilmId") Integer id) {
 		ModelAndView mv = new ModelAndView();
@@ -84,17 +83,17 @@ public class FilmController {
 		mv.setViewName("WEB-INF/views/EditFilm.jsp");
 		return mv;
 	}
-	
+
 	@RequestMapping(path = "EditFilm2.do", method = RequestMethod.POST)
-	public String  submitEditFilm(Film film, RedirectAttributes redir) {
-		List<Film> films = new ArrayList<>(); 
-		
+	public String submitEditFilm(Film film, RedirectAttributes redir) {
+		List<Film> films = new ArrayList<>();
+
 		Film editedFilm = filmDAO.editFilm(film);
 		films.add(editedFilm);
 		redir.addFlashAttribute("films", films);
 		return "redirect:filmEdited.do";
 	}
-	
+
 	@RequestMapping("filmEdited.do")
 	public ModelAndView filmEdited() {
 		ModelAndView mv = new ModelAndView();
@@ -104,33 +103,35 @@ public class FilmController {
 		return mv;
 	}
 
-
-
 	@RequestMapping(path = "AddActor.do", method = RequestMethod.POST)
 	public ModelAndView newActor(Actor actor) {
-	    ModelAndView mv = new ModelAndView();
-	    Actor newActor = filmDAO.createActor(actor);
-	    
-	    mv.addObject("newActor", newActor);
+		ModelAndView mv = new ModelAndView();
+		Actor newActor = filmDAO.createActor(actor);
 
-	    mv.setViewName("WEB-INF/views/actorResults.jsp");
+		mv.addObject("newActor", newActor);
 
-	    return mv;
-	}
+		mv.setViewName("WEB-INF/views/actorResults.jsp");
 
-
-
+		return mv;
 	}
 	
-	
+	@RequestMapping(path = "searchFilms.do", method = RequestMethod.POST)
+	public ModelAndView searchFilms(@RequestParam("keyword") String keyword, Model model) {
+		ModelAndView mv = new ModelAndView();
+		List<Film> films = filmDAO.findFilmsByKeyword(keyword);
+	    model.addAttribute("films", films);
+		mv.addObject("films", films);
+		mv.setViewName("WEB-INF/views/filmSearchResults.jsp");
+		return mv;
+    }
 
+	@RequestMapping(path = "DeleteActor.do", method = RequestMethod.POST)
+	public ModelAndView deleteActorById(@RequestParam("deleteActorId") Integer id) {
+		ModelAndView mv = new ModelAndView();
+		Boolean isDeleted = filmDAO.deleteActor(id);
 
+		mv.setViewName("redirect:/WEB-INF/views/filmSearchResults.jsp"); // Redirect to film search results page
+		return mv;
+	}
 
-
-
-
-
-
-
-
-
+}

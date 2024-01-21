@@ -30,13 +30,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	@Override
 	public Film editFilm(Film film) {
-		String sql = "UPDATE film "
-				+ "SET title = ?, "
-				+ "description = ?, "
-				+ "release_year = ?, "
-				+ "length = ?, "
-				+ "rating = ? "
-				+ "WHERE id = ?";
+		String sql = "UPDATE film " + "SET title = ?, " + "description = ?, " + "release_year = ?, " + "length = ?, "
+				+ "rating = ? " + "WHERE id = ?";
 
 		Connection conn = null;
 		try {
@@ -48,16 +43,16 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			st.setInt(3, film.getYear());
 			st.setInt(4, film.getLength());
 			st.setString(5, film.getRating());
-			st.setInt(6,  film.getId());
+			st.setInt(6, film.getId());
 
 			int uc = st.executeUpdate();
 			System.out.println(uc + " film record updated.");
 
 			ResultSet keys = st.getGeneratedKeys();
-		    if (keys.next()) {
-		        int generatedFilmId = keys.getInt(1);
-		        System.out.println("Film ID: " + generatedFilmId + " updated");
-		    }
+			if (keys.next()) {
+				int generatedFilmId = keys.getInt(1);
+				System.out.println("Film ID: " + generatedFilmId + " updated");
+			}
 
 			conn.commit();
 			st.close();
@@ -86,7 +81,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			conn.setAutoCommit(false); // Start transaction
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setInt(1, film.getId());
-
 
 			int uc = st.executeUpdate();
 			System.out.println(uc + " film record deleted.");
@@ -120,7 +114,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setInt(1, id);
 
-
 			int uc = st.executeUpdate();
 			System.out.println(uc + " film record deleted.");
 
@@ -144,12 +137,12 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	@Override
 	public Film createFilm(Film film) {
-	    Map<String, Integer> languageMapping = new HashMap<>();
-        languageMapping.put("English", 1);
-        languageMapping.put("Italian", 2);
-        languageMapping.put("Japanese", 3);
-        languageMapping.put("Mandarin", 4);
-        languageMapping.put("French", 5);
+		Map<String, Integer> languageMapping = new HashMap<>();
+		languageMapping.put("English", 1);
+		languageMapping.put("Italian", 2);
+		languageMapping.put("Japanese", 3);
+		languageMapping.put("Mandarin", 4);
+		languageMapping.put("French", 5);
 		String sql = "INSERT INTO film (title, description, release_year, language_id, "
 				+ "                     length, rating)" + "    VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -169,11 +162,11 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			System.out.println(uc + " film record created.");
 
 			ResultSet keys = st.getGeneratedKeys();
-		    if (keys.next()) {
-		        int generatedFilmId = keys.getInt(1);
-		        System.out.println("New film ID: " + generatedFilmId);
-		        film.setId(generatedFilmId);
-		    }
+			if (keys.next()) {
+				int generatedFilmId = keys.getInt(1);
+				System.out.println("New film ID: " + generatedFilmId);
+				film.setId(generatedFilmId);
+			}
 
 			conn.commit();
 			st.close();
@@ -194,50 +187,41 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	}
 
 	public List<Film> findFilmsByKeyword(String keyword) {
-	    List<Film> films = new ArrayList<>();
-	    String sql = "SELECT f.*, l.name as language\n"
-	            + "FROM film f\n"
-	            + "JOIN language l\n"
-	            + " ON l.id = f.language_id\n"
-	            + "WHERE title COLLATE utf8_general_ci LIKE ?\n"
-	            + " OR description COLLATE utf8_general_ci LIKE ?;";
-	    try {
-	        Connection conn = DriverManager.getConnection(URL, USER, PASS);
-	        PreparedStatement ps = conn.prepareStatement(sql);
-	        ps.setString(1, "%" + keyword + "%");
-	        ps.setString(2, "%" + keyword + "%");
-	        ResultSet rs = ps.executeQuery();
+		List<Film> films = new ArrayList<>();
+		String sql = "SELECT f.*, l.name as language\n" + "FROM film f\n" + "JOIN language l\n"
+				+ " ON l.id = f.language_id\n" + "WHERE title COLLATE utf8_general_ci LIKE ?\n"
+				+ " OR description COLLATE utf8_general_ci LIKE ?;";
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + keyword + "%");
+			ps.setString(2, "%" + keyword + "%");
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
-	            Integer id = rs.getInt("id");
-	            List<Actor> actors = findActorsByFilmId(id);
-	            Category category = findCategoryByFilmId(id);
-	            Film film = new Film(id, rs.getString("title"), rs.getString("description"), actors,
-	                    rs.getInt("release_year"), rs.getString("rating"), rs.getString("language"),
-	                    rs.getInt("length"), category.toString());
-	            films.add(film);
-	        }
+			while (rs.next()) {
+				Integer id = rs.getInt("id");
+				List<Actor> actors = findActorsByFilmId(id);
+				Category category = findCategoryByFilmId(id);
+				Film film = new Film(id, rs.getString("title"), rs.getString("description"), actors,
+						rs.getInt("release_year"), rs.getString("rating"), rs.getString("language"),
+						rs.getInt("length"), category.toString());
+				films.add(film);
+			}
 
-	        rs.close();
-	        ps.close();
-	        conn.close();
-	    } catch (SQLException e) {
-	        System.err.println(e);
-	    }
-	    return films;
+			rs.close();
+			ps.close();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		return films;
 	}
-
-
 
 	@Override
 	public Film findFilmById(int filmId) {
 		Film film = null;
-		String sql = "SELECT f.*,\n"
-		                   + "l.name AS language\n"
-		                   + "FROM film f\n"
-		                   + "JOIN language l \n"
-			               + " ON f.language_id  = l.id\n"
-		                   + "WHERE f.id = ?";
+		String sql = "SELECT f.*,\n" + "l.name AS language\n" + "FROM film f\n" + "JOIN language l \n"
+				+ " ON f.language_id  = l.id\n" + "WHERE f.id = ?";
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -291,10 +275,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	@Override
 	public Category findCategoryByFilmId(int filmId) {
 		Category category = null;
-		String sql = "SELECT *\n"
-				+ "FROM category c\n"
-				+ "JOIN film_category fc\n"
-				+ " ON fc.category_id = c.id \n"
+		String sql = "SELECT *\n" + "FROM category c\n" + "JOIN film_category fc\n" + " ON fc.category_id = c.id \n"
 				+ "WHERE fc.film_id = ?";
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
@@ -317,32 +298,63 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	@Override
 	public Actor createActor(Actor actor) {
-	    String sql = "INSERT INTO actor (first_name, last_name)"
-	            + " VALUES (?, ?)";
+		String sql = "INSERT INTO actor (first_name, last_name)" + " VALUES (?, ?)";
 
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			conn.setAutoCommit(false); // Start transaction
+			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, actor.getFirstName());
+			st.setString(2, actor.getLastName());
+
+			int uc = st.executeUpdate();
+			System.out.println(uc + " actor record created.");
+
+			ResultSet keys = st.getGeneratedKeys();
+			if (keys.next()) {
+				int generatedActorId = keys.getInt(1);
+				System.out.println("New actor ID: " + generatedActorId);
+				actor.setId(generatedActorId);
+			}
+
+			conn.commit();
+			st.close();
+			conn.close();
+			return actor;
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			return null;
+		}
+	}
+
+
+	@Override
+	public Boolean deleteActor(Integer id) {
 	    Connection conn = null;
+	    PreparedStatement stmt = null;
+	    String sql = "DELETE FROM actor WHERE id = ?"; // Corrected to delete from 'actor' table
+
 	    try {
 	        conn = DriverManager.getConnection(URL, USER, PASS);
 	        conn.setAutoCommit(false); // Start transaction
-	        PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-	        st.setString(1, actor.getFirstName());
-	        st.setString(2, actor.getLastName());
-	       
+	        PreparedStatement st = conn.prepareStatement(sql);
+	        st.setInt(1, id);
 
-	        int uc = st.executeUpdate();
-	        System.out.println(uc + " actor record created.");
-
-	        ResultSet keys = st.getGeneratedKeys();
-	        if (keys.next()) {
-	            int generatedActorId = keys.getInt(1);
-	            System.out.println("New actor ID: " + generatedActorId);
-	            actor.setId(generatedActorId);
-	        }
+	        int rowsAffected = st.executeUpdate();
+	        System.out.println(rowsAffected + " actor record(s) deleted.");
 
 	        conn.commit();
 	        st.close();
 	        conn.close();
-	        return actor;
+	        return rowsAffected > 0;
 	    } catch (SQLException sqle) {
 	        sqle.printStackTrace();
 	        if (conn != null) {
@@ -352,10 +364,12 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	                System.err.println("Error trying to rollback");
 	            }
 	        }
-	        return null;
+	        return false;
 	    }
 	}
 
+	}
+
+	
 
 
-}

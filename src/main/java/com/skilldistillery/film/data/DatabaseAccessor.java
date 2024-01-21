@@ -20,6 +20,8 @@ public interface DatabaseAccessor {
 	public boolean deleteFilm(Film film);
 	public boolean deleteFilm(Integer id);
 	public Actor createActor(Actor actor);
+	public Boolean deleteActor(Integer id);
+	
 
 
 }
