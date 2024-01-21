@@ -47,8 +47,7 @@
 			<option value="French">French</option>
 			<!-- Add more language options as needed -->
 		</select> <br> <input type="submit" value="Update Film" />
-	<div>
-	div class="col-auto">
+	<div class="col-auto">
                     <button type="button" class="btn btn-secondary" onclick="goBack()">Go Back</button>
                 </div>
 	
