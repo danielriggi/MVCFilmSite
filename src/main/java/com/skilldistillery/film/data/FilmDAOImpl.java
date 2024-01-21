@@ -315,5 +315,47 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	}
 
+	@Override
+	public Actor createActor(Actor actor) {
+	    String sql = "INSERT INTO actor (first_name, last_name)"
+	            + " VALUES (?, ?)";
+
+	    Connection conn = null;
+	    try {
+	        conn = DriverManager.getConnection(URL, USER, PASS);
+	        conn.setAutoCommit(false); // Start transaction
+	        PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	        st.setString(1, actor.getFirstName());
+	        st.setString(2, actor.getLastName());
+	       
+
+	        int uc = st.executeUpdate();
+	        System.out.println(uc + " actor record created.");
+
+	        ResultSet keys = st.getGeneratedKeys();
+	        if (keys.next()) {
+	            int generatedActorId = keys.getInt(1);
+	            System.out.println("New actor ID: " + generatedActorId);
+	            actor.setId(generatedActorId);
+	        }
+
+	        conn.commit();
+	        st.close();
+	        conn.close();
+	        return actor;
+	    } catch (SQLException sqle) {
+	        sqle.printStackTrace();
+	        if (conn != null) {
+	            try {
+	                conn.rollback();
+	            } catch (SQLException sqle2) {
+	                System.err.println("Error trying to rollback");
+	            }
+	        }
+	        return null;
+	    }
+	}
+
+
 
 }

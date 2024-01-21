@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.data.DatabaseAccessor;
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 @Controller
@@ -105,18 +106,23 @@ public class FilmController {
 
 
 
-	@RequestMapping(path = "searchFilms.do", method = RequestMethod.POST)
-	public ModelAndView searchFilms(@RequestParam("keyword") String keyword, Model model) {
-		ModelAndView mv = new ModelAndView();
-		 //Map<String, Object> existingAttributes = model.asMap();
-		List<Film> films = filmDAO.findFilmsByKeyword(keyword);
-	    model.addAttribute("films", films);
-		mv.addObject("films", films);
-		mv.setViewName("WEB-INF/views/filmSearchResults.jsp");
-		return mv;
-    }
-}
+	@RequestMapping(path = "AddActor.do", method = RequestMethod.POST)
+	public ModelAndView newActor(Actor actor) {
+	    ModelAndView mv = new ModelAndView();
+	    Actor newActor = filmDAO.createActor(actor);
+	    
+	    mv.addObject("newActor", newActor);
 
+	    mv.setViewName("WEB-INF/views/filmSearchResults.jsp");
+
+	    return mv;
+	}
+
+
+
+	}
+	
+	
 
 
 

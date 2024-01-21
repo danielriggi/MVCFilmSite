@@ -19,6 +19,7 @@ public interface DatabaseAccessor {
 	public Category findCategoryByFilmId(int filmId);
 	public boolean deleteFilm(Film film);
 	public boolean deleteFilm(Integer id);
+	public Actor createActor(Actor actor);
 
 
 }

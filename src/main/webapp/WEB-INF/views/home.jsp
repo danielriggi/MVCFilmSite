@@ -26,6 +26,10 @@
         <button type="submit" class="btn btn-primary">Add New Film</button>
     </form>
 <br>
+    <form action="AddNewActor.html" method="get">
+        <button type="submit" class="btn btn-primary">Add New Actor</button>
+    </form>
+<br>
     <form action="SearchbyKeyword.html" method="get">
         <button type="submit" class="btn btn-primary">Search Films by Keyword</button>
     </form>

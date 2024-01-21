@@ -30,6 +30,14 @@
 					<li>Actors: ${film.actors}</li>
 					<li>Language: ${film.language}</li>
 					<li>Category: ${film.category}</li>
+					
+						<!-- Display new actor information -->
+					<c:if test="${not empty newActor}">
+						<p>New Actor Added:</p>
+						<p>ID: ${newActor.id}</p>
+						<p>Name: ${newActor.firstName} ${newActor.lastName}</p>
+					</c:if>
+					
 					<!-- Edit Film Form -->
 					<form action="EditFilm.do" method="POST">
 						<input type="hidden" name="editFilmId" value="${film.id}">
