@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -125,13 +126,27 @@ public class FilmController {
 		return mv;
     }
 
-	@RequestMapping(path = "DeleteActor.do", method = RequestMethod.POST)
-	public ModelAndView deleteActorById(@RequestParam("deleteActorId") Integer id) {
-		ModelAndView mv = new ModelAndView();
-		Boolean isDeleted = filmDAO.deleteActor(id);
 
-		mv.setViewName("redirect:/WEB-INF/views/filmSearchResults.jsp"); // Redirect to film search results page
-		return mv;
+	@RequestMapping(path = "UpdateActor.do", method = RequestMethod.POST)
+	public String updateActor(@RequestParam("updateActorId") int actorId,
+	                           @RequestParam("firstName") String firstName,
+	                           @RequestParam("lastName") String lastName,
+	                           Model model) {
+	    // Retrieve the existing actor by ID
+	    Actor existingActor = filmDAO.getActorById(actorId);
+
+	    if (existingActor != null) {
+	        // Update the actor's details
+	        existingActor.setFirstName(firstName);
+	        existingActor.setLastName(lastName);
+
+	        // Perform the update in the data source (e.g., database)
+	        filmDAO.updateActor(existingActor);
+
+	        // Redirect to the film search results page
+	   
+	    }
+	    return "redirect:/path/to/filmSearchResults";
 	}
 
 }

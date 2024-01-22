@@ -21,6 +21,8 @@ public interface DatabaseAccessor {
 	public boolean deleteFilm(Integer id);
 	public Actor createActor(Actor actor);
 	public Boolean deleteActor(Integer id);
+	public Actor getActorById(int actorId);
+	public Actor updateActor(Actor actor);
 	
 
 

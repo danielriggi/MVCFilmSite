@@ -16,7 +16,10 @@
 	crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
 	<h1>Films</h1>
+	 <br>
+        <br>
 	<c:choose>
 		<c:when test="${fn:length(films) > 0}">
 			<ul>
@@ -30,20 +33,7 @@
 					<li>Actors: ${film.actors}</li>
 					<li>Language: ${film.language}</li>
 					<li>Category: ${film.category}</li>
-					<!-- Edit Film Form -->
-					<form action="EditFilm.do" method="POST">
-						<input type="hidden" name="editFilmId" value="${film.id}">
-						<button type="submit" class="btn btn-primary">Edit this
-							film</button>
-					</form>
-					<!-- Delete Film Form -->
-					<form action="DeleteFilm.do" method="POST">
-						<input type="hidden" name="deleteFilmId" value="${film.id}">
-						<button type="submit" class="btn btn-danger">Delete this
-							film</button>
-					</form>
-
-					<br />
+					</div>
 				</c:forEach>
 			</ul>
 		</c:when>
@@ -51,22 +41,36 @@
 			<p>No films found</p>
 		</c:otherwise>
 	</c:choose>
-	<!-- Back Button -->
-	<div class="col-auto">
-		<button type="button" class="btn btn-secondary" onclick="goBack()">Go
-			Back</button>
-	</div>
+	
+		<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <form action="EditFilm.do" method="POST">
+        <input type="hidden" name="editFilmId" value="${film.id}">
+        <button type="submit" class="btn btn-primary">Edit this film</button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form action="DeleteFilm.do" method="POST">
+        <input type="hidden" name="deleteFilmId" value="${film.id}">
+        <button type="submit" class="btn btn-danger">Delete this film</button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-secondary" onclick="goBack()">Go Back</button>
+    </div>
+  </div>
+</div>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
-	<script>
-		function goBack() {
-			window.location.href = "/MVCFilmSite/GetFilmById.html";
-
-		}
-	</script>
+<script>
+    function goBack() {
+        window.history.go(-1);
+    }
+</script>
 
 
 </body>

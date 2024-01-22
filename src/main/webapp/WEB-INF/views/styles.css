@@ -1,0 +1,12 @@
+
+
+body {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  background-image: url('/MVCFilmSite/src/main/webapp/seamless-pattern-with-cinema-elements_225004-1154.jpg'); /* Replace with your image path */
+  background-size: cover; /* Cover the entire viewport */
+  background-position: center; /* Center the background image */
+  background-repeat: repeat; /* Do not repeat the background image */
+}
+
+/* Additional styles for other elements can be added here */

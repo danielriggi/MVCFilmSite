@@ -367,6 +367,52 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	        return false;
 	    }
 	}
+	@Override   
+	public Actor getActorById(int actorId) {
+	    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+	         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM actors WHERE id = ?")) {
+	        stmt.setInt(1, actorId);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                Actor actor = new Actor();
+	                actor.setId(rs.getInt("id"));
+	                actor.setFirstName(rs.getString("first_name"));
+	                actor.setLastName(rs.getString("last_name"));
+	                // Set other properties as needed
+	                return actor;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Log the exception or handle it according to your application's logging strategy.
+	    }
+
+	    // Return null in case of an exception or if no actor is found
+	    return null;
+	
+
+	    }
+	@Override
+	public Actor updateActor(Actor actor) {
+	    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+	         PreparedStatement stmt = conn.prepareStatement(
+	                 "UPDATE actors SET first_name = ?, last_name = ? WHERE id = ?")) {
+	        stmt.setString(1, actor.getFirstName());
+	        stmt.setString(2, actor.getLastName());
+	        stmt.setInt(3, actor.getId());
+
+	        int rowsUpdated = stmt.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            System.out.println("Actor updated successfully.");
+	        } else {
+	            System.out.println("No actor found with the specified ID.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Log the exception or handle it according to your application's logging strategy.
+	    }
+		return actor;
+	}
+
 
 	}
 
