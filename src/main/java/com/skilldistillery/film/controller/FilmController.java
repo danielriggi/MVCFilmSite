@@ -103,6 +103,16 @@ public class FilmController {
 		return mv;
 	}
 	
+	@RequestMapping(path = "DeleteActor.do", method = RequestMethod.POST)
+	public ModelAndView delActor(Actor actor) {
+		ModelAndView mv = new ModelAndView();
+		filmDAO.deleteActor(actor);
+
+		mv.setViewName("WEB-INF/views/home.jsp");
+
+		return mv;
+	}
+	
 	@RequestMapping(path = "searchFilms.do", method = RequestMethod.POST)
 	public ModelAndView searchFilms(@RequestParam("keyword") String keyword, Model model) {
 		ModelAndView mv = new ModelAndView();

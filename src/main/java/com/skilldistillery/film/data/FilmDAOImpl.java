@@ -337,7 +337,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 
 	@Override
-	public Boolean deleteActor(Integer id) {
+	public Boolean deleteActor(Actor actor) {
 	    Connection conn = null;
 	    PreparedStatement stmt = null;
 	    String sql = "DELETE FROM actor WHERE id = ?"; // Corrected to delete from 'actor' table
@@ -346,7 +346,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	        conn = DriverManager.getConnection(URL, USER, PASS);
 	        conn.setAutoCommit(false); // Start transaction
 	        PreparedStatement st = conn.prepareStatement(sql);
-	        st.setInt(1, id);
+	        st.setInt(1, actor.getId());
 
 	        int rowsAffected = st.executeUpdate();
 	        System.out.println(rowsAffected + " actor record(s) deleted.");
