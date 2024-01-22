@@ -1,37 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Film Query</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" href="/MVCFilmSite/src/main/webapp/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Film Query</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/MVCFilmSite/src/main/webapp/styles.css">
+<style>
+/* Add some left margin to the form */
+form, h3, .btn-secondary {
+	margin-left: 20px; /* Adjust the value as needed */
+}
+
+/* Add space between form elements */
+form input, form select, .btn.btn-primary {
+	margin-bottom: 10px; /* Adjust the value as needed */
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h3>Search by Keyword</h3>
-	<form action="searchFilms.do" method="POST">
-<br>
-<br>
- 
-    <div class="mb-3">
-        <label for="keyword" class="form-label">Enter Keyword:</label>
-        <input type="text" class="form-control" id="keyword" name="keyword" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Search Films</button>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-secondary" onclick="goBack()">Go Back</button>
-                </div>
-</form>
-    
+	<div class="container">
+		<h3>Search by Keyword</h3>
+		<form action="searchFilms.do" method="POST">
+			<br> <br>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script>
-    function goBack() {
-        window.history.go(-1);
-    }
-</script>
+			<div class="mb-3">
+				<label for="keyword" class="form-label">Enter Keyword:</label> <input
+					type="text" class="form-control" id="keyword" name="keyword"
+					required>
+			</div>
+			<button type="submit" class="btn btn-primary">Search Films</button>
 
+		</form>
 
+		<div class="col-auto">
+			<button type="button" class="btn btn-secondary" onclick="goBack()">Go
+				Back</button>
+		</div>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+			crossorigin="anonymous"></script>
+		<script>
+			function goBack() {
+				window.history.go(-1);
+			}
+		</script>
 </body>
 </html>
