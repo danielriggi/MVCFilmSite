@@ -16,16 +16,15 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="/MVCFilmSite/src/main/webapp/styles.css">
 <style>
-  /* Add some left margin to the form */
-  form, h3, .btn-secondary {
-    margin-left: 20px; /* Adjust the value as needed */
-  }
+/* Add some left margin to the form */
+form, h3, .btn-secondary {
+	margin-left: 20px; /* Adjust the value as needed */
+}
 
-  /* Add space between form elements */
-  form input,
-  form select {
-    margin-bottom: 10px; /* Adjust the value as needed */
-  }
+/* Add space between form elements */
+form input, form select {
+	margin-bottom: 10px; /* Adjust the value as needed */
+}
 </style>
 </head>
 <body>
@@ -68,22 +67,23 @@
 			<option value="French" ${film.language == 'French' ? 'selected' : ''}>French</option>
 		</select> <br> <input type="submit" value="Update Film" />
 
-		<div class="col-auto">
-			<button type="button" class="btn btn-secondary" onclick="goBack()">Go
-				Back</button>
-		</div>
+
 
 	</form>
+	<div class="col-auto">
+		<button type="button" class="btn btn-secondary" onclick="goBack()">Go
+			Back</button>
+	</div>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
-<script>
-    function goBack() {
-        window.history.go(-1);
-    }
-</script>
+	<script>
+		function goBack() {
+			window.history.go(-1);
+		}
+	</script>
 
 </body>
 </html>
