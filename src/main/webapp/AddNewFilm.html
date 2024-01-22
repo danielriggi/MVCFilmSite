@@ -9,10 +9,22 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="/MVCFilmSite/src/main/webapp/styles.css">
+<style>
+  /* Add some left margin to the form */
+  form, h3, .btn-secondary {
+    margin-left: 20px; /* Adjust the value as needed */
+  }
+
+  /* Add space between form elements */
+  form input,
+  form select {
+    margin-bottom: 10px; /* Adjust the value as needed */
+  }
+</style>
 </head>
 <body>
   <h3>Add Film</h3>
-  <form action="filmAdded.do" method="POST">
+  <form action="AddFilm.do" method="POST">
     <!-- Title input -->
     Title:
     <input type="text" name="title" required/> 

@@ -32,37 +32,26 @@ public class FilmController {
 	@RequestMapping(path = "GetFilm.do", params = "id", method = RequestMethod.GET)
 	public ModelAndView getFilmById(@RequestParam("id") Integer id) {
 		ModelAndView mv = new ModelAndView();
-		List<Film> films = new ArrayList<>(); // Initialize an empty list
 
 		Film film = filmDAO.findFilmById(id);
-		if (film != null) {
-			films.add(film); // Add the film to the list
-		}
 
-		mv.addObject("films", films);
+		mv.addObject("film", film);
 		mv.setViewName("WEB-INF/views/result.jsp");
 		return mv;
 	}
 
 	@RequestMapping(path = "AddFilm.do", method = RequestMethod.POST)
-	public String newFilm(Film film, RedirectAttributes redir) {
-		List<Film> films = new ArrayList<>(); // Initialize an empty list
-
+	public String newFilm(Film film, RedirectAttributes redir) { 
+		
 		Film newFilm = filmDAO.createFilm(film);
-		if (newFilm != null) {
-			films.add(newFilm); // Add the film to the list
-		}
-
-		;
-		redir.addFlashAttribute("films", films);
+		redir.addFlashAttribute("film", newFilm);
 		return "redirect:filmAdded.do";
 	}
 
 	@RequestMapping("filmAdded.do")
 	public ModelAndView filmAdded() {
 		ModelAndView mv = new ModelAndView();
-		// This uses InternalResourceViewResolver with WEB-INF and .jsp as the prefix
-		// and suffix
+
 		mv.setViewName("WEB-INF/views/result.jsp");
 		return mv;
 	}
@@ -87,11 +76,9 @@ public class FilmController {
 
 	@RequestMapping(path = "EditFilm2.do", method = RequestMethod.POST)
 	public String submitEditFilm(Film film, RedirectAttributes redir) {
-		List<Film> films = new ArrayList<>();
 
 		Film editedFilm = filmDAO.editFilm(film);
-		films.add(editedFilm);
-		redir.addFlashAttribute("films", films);
+		redir.addFlashAttribute("film", film);
 		return "redirect:filmEdited.do";
 	}
 

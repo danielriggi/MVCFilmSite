@@ -17,26 +17,22 @@
 </head>
 <body>
 <div class="container">
-	<h1>Films</h1>
+	<h1>Film</h1>
 	 <br>
-        <br>
-	<c:choose>
-		<c:when test="${fn:length(films) > 0}">
-			<ul>
-				<c:forEach items="${films}" var="film">
-					<li>ID: ${film.id}</li>
-					<li>Title: ${film.title}</li>
-					<li>Description: ${film.description}</li>
-					<li>Year: ${film.year}</li>
-					<li>Length: ${film.length}</li>
-					<li>Rating: ${film.rating}</li>
-					<li>Actors: ${film.actors}</li>
-					<li>Language: ${film.language}</li>
-					<li>Category: ${film.category}</li>
-					</div>
-				</c:forEach>
-			</ul>
-		</c:when>
+     <c:choose>
+    <c:when test="${not empty film}">
+        <ul>
+            <li>ID: ${film.id}</li>
+            <li>Title: ${film.title}</li>
+            <li>Description: ${film.description}</li>
+            <li>Year: ${film.year}</li>
+            <li>Length: ${film.length}</li>
+            <li>Rating: ${film.rating}</li>
+            <li>Actors: ${film.actors}</li>
+            <li>Language: ${film.language}</li>
+            <li>Category: ${film.category}</li>
+        </ul>
+    </c:when>
 		<c:otherwise>
 			<p>No films found</p>
 		</c:otherwise>
